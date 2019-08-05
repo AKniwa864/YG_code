@@ -32,10 +32,10 @@ namespace Tsumu
         private UI.SkillMeter skillMeter;
 
         [SerializeField]
-        private ObjectPool objectPoolEffect;
+        private ObjectPool effectPool;
 
         [SerializeField]
-        private ObjectPool objectPoolBomb;
+        private ObjectPool bombPool;
 
         [SerializeField]
         private Bomb bomb;
@@ -127,14 +127,13 @@ namespace Tsumu
         private void OnDragEnd()
         {
             int tempCount = dragTsumuList.Count;
-            Vector2 tempPos = dragTsumuList.Last().transform.position;
 
             if (tempCount >= Constants.CONNECT_MIN)
             {
                 DestroyTsumu(dragTsumuList);
 
                 if (tempCount >= Constants.CONNECT_BOMB_MIN)
-                    objectPoolBomb.PopObj(tempPos);
+                    bombPool.PopObj(dragTsumuList.Last().transform.position);
             }
             firstTsumu.GetComponent<SpriteRenderer>().color = Color.white;
             lastTsumu.GetComponent<SpriteRenderer>().color = Color.white;
@@ -154,7 +153,7 @@ namespace Tsumu
 
             foreach (GameObject obj in list)
             {
-                objectPoolEffect.PopObj(obj.transform.position);
+                effectPool.PopObj(obj.transform.position);
                 Destroy(obj);
 
                 if (obj.name.Contains(tempMainTsumu.ToString()))
