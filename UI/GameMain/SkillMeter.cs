@@ -9,9 +9,6 @@ namespace UI
         private Image mainTsumu;
 
         [SerializeField]
-        private Animation skillReady;
-
-        [SerializeField]
         private GameObject cutIn;
 
         [SerializeField]
@@ -26,6 +23,8 @@ namespace UI
         private GameManager gameManager;
 
         private Animator cutInAnim;
+
+        private Animation skillReady;
 
         private Slider skillMeter;
 
@@ -44,6 +43,7 @@ namespace UI
         {
             gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
             cutInAnim = cutIn.GetComponent<Animator>();
+            skillReady = gameObject.GetComponent<Animation>();
             skillMeter = gameObject.GetComponent<Slider>();
 
             mainTsumu.sprite = gameManager.MainTsumuSprite;

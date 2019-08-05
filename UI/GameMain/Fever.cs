@@ -14,6 +14,8 @@ namespace UI
 
         private ObjectPool linePool;
 
+        private RectTransform backWidth;
+
         private RectTransform feverTrans;
         private Animation feverAnim;
         private Image fever;
@@ -41,12 +43,15 @@ namespace UI
         void Start()
         {
             linePool = inFever.GetComponent<ObjectPool>();
+            backWidth = transform.parent.GetComponent<RectTransform>();
             feverTrans = GetComponent<RectTransform>();
             feverAnim = GetComponent<Animation>();
             fever = GetComponent<Image>();
 
-            feverWidth = feverTrans.sizeDelta.x;
-            singleWidth = Constants.FEVER_WIDTH_MAX / Constants.FEVER_TSUMU_MIN;
+            feverTrans.offsetMax = new Vector2(-backWidth.rect.width, feverTrans.offsetMax.y);
+
+            feverWidth = backWidth.rect.width;
+            singleWidth = backWidth.rect.width / Constants.FEVER_TSUMU_MIN;
         }
 
         void Update()
@@ -68,10 +73,10 @@ namespace UI
 
         private void Add()
         {
-            feverWidth = singleWidth * tsumuCount;
+            feverWidth = singleWidth * tsumuCount - backWidth.rect.width;
 
-            if(feverWidth > Constants.FEVER_WIDTH_MAX)
-                feverWidth = Constants.FEVER_WIDTH_MAX;
+            if (feverWidth > 0)
+                feverWidth = 0;
 
             UpdateBar();
         }
@@ -85,7 +90,7 @@ namespace UI
             {
                 float rate = elapsedTime / Constants.FEVER_TIME;
 
-                feverWidth = Constants.FEVER_WIDTH_MAX * (1.0f - rate);
+                feverWidth = -backWidth.rect.width * rate;
                 UpdateBar();
 
                 elapsedTime += Time.deltaTime;
@@ -93,7 +98,7 @@ namespace UI
                 yield return null;
             }
 
-            feverWidth = 0;
+            feverWidth = -backWidth.rect.width;
             UpdateBar();
             isFever = false;
             inFever.SetActive(false);
@@ -107,7 +112,7 @@ namespace UI
 
         private void UpdateBar()
         {
-            feverTrans.sizeDelta = new Vector2(feverWidth, feverTrans.sizeDelta.y);
+            feverTrans.offsetMax = new Vector2(feverWidth, feverTrans.offsetMax.y);
         }
 
         private void PopLine()
