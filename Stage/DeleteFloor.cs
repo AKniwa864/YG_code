@@ -8,6 +8,9 @@ namespace Stage
     public class DeleteFloor : MonoBehaviour
     {
         [SerializeField]
+        ObjectPool bombPool;
+
+        [SerializeField]
         TsumuPop tsumuPop;
 
         void OnCollisionEnter2D(Collision2D collision)
@@ -16,6 +19,13 @@ namespace Stage
             {
                 Destroy(collision.gameObject);
                 tsumuPop.TsumuCount--;
+            }
+
+            if (collision.gameObject.tag == "Bomb")
+            {
+                Destroy(collision.gameObject);
+                bombPool.PopObj(new Vector2(Random.Range(-2.0f, 2.0f), 6.0f));
+
             }
         }
     }

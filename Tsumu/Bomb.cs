@@ -13,12 +13,12 @@ namespace Tsumu
 
         private List<GameObject> destroyTsumuList = new List<GameObject>();
 
-        private DestroyCollision bombCollision;
+        private CollisionList bombCollision;
 
         public void OnClick(GameObject obj)
         {
-            bombCollision = obj.GetComponentInChildren<DestroyCollision>();
-            destroyTsumuList = bombCollision.DestroyTsumuList;
+            bombCollision = obj.GetComponentInChildren<CollisionList>();
+            destroyTsumuList = bombCollision.TsumuList;
 
             objectPool.PushObj(obj);
             obj.SetActive(false);

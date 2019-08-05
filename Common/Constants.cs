@@ -17,6 +17,10 @@ public class Constants
         public static readonly string ISABELLA = "Prefabs/Tsumu/Isabella";
 
         public static readonly string VERTICAL_DESTROY = "Prefabs/Skill/VerticalDestroy";
+        public static readonly string HORIZONTAL_DESTROY = "Prefabs/Skill/HorizontalDestroy";
+        public static readonly string CENTER_CHANGE = "Prefabs/Skill/CenterChange";
+        public static readonly string RANDOM_CHANGE = "Prefabs/Skill/RandomChange";
+        public static readonly string POP_BOMB = "Prefabs/Skill/PopBomb";
     }
 
     public struct Name
@@ -38,11 +42,13 @@ public class Constants
     public static readonly int CONNECT_BOMB_MIN = 6;
     public static readonly float CONNECT_DISTANCE = 1.5f;
 
+    public static readonly int SKILL_BOMB_AMOUNT = 2;
+    public static readonly int SKILL_CHANGE_AMOUNT = 8;
+
     public static readonly float COMBO_LIMIT_TIME = 2.5f;
 
     public static readonly int FEVER_TSUMU_MIN = 15;
     public static readonly float FEVER_TIME = 4.0f;
-    public static readonly float FEVER_WIDTH_MAX = 300.0f;
 
     public static readonly int EFFECT_LINE_AMOUNT = 6;
 
@@ -69,5 +75,9 @@ public class Constants
     public enum SkillType
     {
         VerticalDestroy = 0,
+        HorizontalDestroy,
+        CenterChange,
+        RandomChange,
+        PopBomb,
     }
 }

@@ -98,23 +98,23 @@ public class GameManager : MonoBehaviour
         switch (mainTsumu)
         {
             case 0:
-                return (GameObject)Resources.Load(Constants.Data.VERTICAL_DESTROY);
+                return (GameObject)Resources.Load(Constants.Data.HORIZONTAL_DESTROY);
             case 1:
-                return (GameObject)Resources.Load(Constants.Data.VERTICAL_DESTROY);
+                return (GameObject)Resources.Load(Constants.Data.POP_BOMB);
             case 2:
-                return (GameObject)Resources.Load(Constants.Data.VERTICAL_DESTROY);
+                return (GameObject)Resources.Load(Constants.Data.CENTER_CHANGE);
             case 3:
-                return (GameObject)Resources.Load(Constants.Data.VERTICAL_DESTROY);
+                return (GameObject)Resources.Load(Constants.Data.HORIZONTAL_DESTROY);
             case 4:
                 return (GameObject)Resources.Load(Constants.Data.VERTICAL_DESTROY);
             case 5:
-                return (GameObject)Resources.Load(Constants.Data.VERTICAL_DESTROY);
+                return (GameObject)Resources.Load(Constants.Data.POP_BOMB);
             case 6:
                 return (GameObject)Resources.Load(Constants.Data.VERTICAL_DESTROY);
             case 7:
-                return (GameObject)Resources.Load(Constants.Data.VERTICAL_DESTROY);
+                return (GameObject)Resources.Load(Constants.Data.CENTER_CHANGE);
             case 8:
-                return (GameObject)Resources.Load(Constants.Data.VERTICAL_DESTROY);
+                return (GameObject)Resources.Load(Constants.Data.RANDOM_CHANGE);
             default:
                 return (GameObject)Resources.Load(Constants.Data.VERTICAL_DESTROY);
         }
