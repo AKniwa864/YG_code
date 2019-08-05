@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -11,13 +12,11 @@ namespace UI
         [SerializeField]
         private Timer timer;
 
-        [SerializeField]
-        private RectTransform feverBar;
+        private ObjectPool linePool;
 
-        [SerializeField]
-        private int feverTsumuCount;
-
-        private ObjectPool lineObjectPool;
+        private RectTransform feverTrans;
+        private Animation feverAnim;
+        private Image fever;
 
         private bool isFever = false;
         public bool IsFever => isFever;
@@ -41,18 +40,23 @@ namespace UI
 
         void Start()
         {
-            lineObjectPool = inFever.GetComponent<ObjectPool>();
+            linePool = inFever.GetComponent<ObjectPool>();
+            feverTrans = GetComponent<RectTransform>();
+            feverAnim = GetComponent<Animation>();
+            fever = GetComponent<Image>();
 
-            feverWidth = feverBar.sizeDelta.x;
-            singleWidth = Constants.FEVER_WIDTH_MAX / feverTsumuCount;
+            feverWidth = feverTrans.sizeDelta.x;
+            singleWidth = Constants.FEVER_WIDTH_MAX / Constants.FEVER_TSUMU_MIN;
         }
 
         void Update()
         {
-            if (feverTsumuCount <= tsumuCount)
+            if (Constants.FEVER_TSUMU_MIN <= tsumuCount)
             {
                 isFever = true;
                 inFever.SetActive(true);
+
+                feverAnim.Play();
 
                 for (int i = 0; i < Constants.EFFECT_LINE_AMOUNT; i++)
                     InvokeRepeating("PopLine", Random.Range(0.0f, 0.4f), Random.Range(0.2f, 0.6f));
@@ -65,6 +69,10 @@ namespace UI
         private void Add()
         {
             feverWidth = singleWidth * tsumuCount;
+
+            if(feverWidth > Constants.FEVER_WIDTH_MAX)
+                feverWidth = Constants.FEVER_WIDTH_MAX;
+
             UpdateBar();
         }
 
@@ -89,18 +97,22 @@ namespace UI
             UpdateBar();
             isFever = false;
             inFever.SetActive(false);
+
+            feverAnim.Stop();
+            fever.color = Color.white;
+            
             timer.SwitchTimer(true);
             CancelInvoke();
         }
 
         private void UpdateBar()
         {
-            feverBar.sizeDelta = new Vector2(feverWidth, feverBar.sizeDelta.y);
+            feverTrans.sizeDelta = new Vector2(feverWidth, feverTrans.sizeDelta.y);
         }
 
         private void PopLine()
         {
-            lineObjectPool.PopObj(Vector2.zero);
+            linePool.PopObj(Vector2.zero);
         }
     }
 }

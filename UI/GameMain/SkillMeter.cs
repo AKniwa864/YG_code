@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -14,7 +12,7 @@ namespace UI
         private Animation skillReady;
 
         [SerializeField]
-        private GameObject CutIn;
+        private GameObject cutIn;
 
         [SerializeField]
         private GameObject skillButton;
@@ -25,10 +23,11 @@ namespace UI
         [SerializeField]
         private Skill skill;
 
-        [SerializeField]
-        private Slider skillMeter;
-
         private GameManager gameManager;
+
+        private Animator cutInAnim;
+
+        private Slider skillMeter;
 
         private int skillTsumuCount;
         public int SkillTsumuCount
@@ -44,11 +43,25 @@ namespace UI
         void Start()
         {
             gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+            cutInAnim = cutIn.GetComponent<Animator>();
+            skillMeter = gameObject.GetComponent<Slider>();
+
             mainTsumu.sprite = gameManager.MainTsumuSprite;
         }
 
         void Update()
         {
+            if (cutIn.activeSelf)
+            {
+                if (cutInAnim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+                    return;
+
+                skill.StartSkill();
+
+                Time.timeScale = 1.0f;
+                cutIn.SetActive(false);
+            }
+
             if (skillTsumuCount >= skillMeter.maxValue && !skillButton.activeSelf)
             {
                 skillButton.SetActive(true);
@@ -59,15 +72,13 @@ namespace UI
                 skillButton.SetActive(false);
         }
 
-        public void StartSkill()
+        public void StartCutIn()
         {
-            CutIn.SetActive(true);
+            cutIn.SetActive(true);
             skillButton.SetActive(false);
 
             skillReady.Stop();
             mainTsumu.transform.localScale = new Vector2(1.0f, 1.0f);
-
-            skill.StartSkill();
 
             SkillTsumuCount = 0;
             Time.timeScale = 0.0f;
