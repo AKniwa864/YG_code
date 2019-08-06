@@ -10,6 +10,9 @@ public class Skill : MonoBehaviour
     [SerializeField]
     private ObjectPool bombPool;
 
+    [SerializeField]
+    private ObjectPool skillEffectPool;
+
     private List<GameObject> tsumuList = new List<GameObject>();
 
     private GameManager gameManager;
@@ -36,6 +39,8 @@ public class Skill : MonoBehaviour
     public void StartSkill()
     {
         SwitchSkill();
+
+        //Time.timeScale = 1.0f;
     }
 
     private void SwitchStart()
@@ -88,6 +93,8 @@ public class Skill : MonoBehaviour
         tsumuDrag.DestroyTsumu(tsumuList);
 
         skill.SetActive(true);
+
+        Time.timeScale = 1.0f;
     }
 
     private void AreaChange()
@@ -96,15 +103,16 @@ public class Skill : MonoBehaviour
 
         tsumuList = skillCollision.TsumuList;
 
-        foreach(GameObject obj in tsumuList)
+        foreach(GameObject tempObj in tsumuList)
         {
-            if (obj.name == (mainTsumu.name + "(Clone)"))
+            if (tempObj.name == (mainTsumu.name + "(Clone)"))
                 continue;
 
-            obj.GetComponent<SpriteRenderer>().sprite = mainTsumu;
-            obj.name = mainTsumu.name + "(Clone)";
-        }
+            skillEffectPool.PopObj(tempObj.transform.position);
 
+            tempObj.GetComponent<SpriteRenderer>().sprite = mainTsumu;
+            tempObj.name = mainTsumu.name + "(Clone)";
+        }
         skill.SetActive(true);
     }
 
@@ -112,9 +120,10 @@ public class Skill : MonoBehaviour
     {
         while (amount > 0)
         {
-            bombPool.PopObj(new Vector2(Random.Range(-2.0f, 2.0f), 6.0f));
+            bombPool.PopObj(new Vector2(Random.Range(-2.0f, 2.0f), 3.0f));
             amount--;
         }
+        Time.timeScale = 1.0f;
     }
 
     private void RandomChange(int amount)
@@ -129,6 +138,8 @@ public class Skill : MonoBehaviour
 
             if (tempObj.name == (mainTsumu.name + "(Clone)"))
                 continue;
+
+            skillEffectPool.PopObj(tempObj.transform.position);
 
             tempObj.GetComponent<SpriteRenderer>().sprite = mainTsumu;
             tempObj.name = mainTsumu.name + "(Clone)";

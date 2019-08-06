@@ -58,7 +58,6 @@ namespace UI
 
                 skill.StartSkill();
 
-                Time.timeScale = 1.0f;
                 cutIn.SetActive(false);
             }
 

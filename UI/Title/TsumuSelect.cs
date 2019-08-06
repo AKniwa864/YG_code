@@ -56,6 +56,7 @@ namespace UI
         void Start()
         {
             currentTsumu = (int)Constants.Tsumu.Isabella;
+            ChangeData();
             SetMainData();
         }
 
@@ -129,23 +130,23 @@ namespace UI
             switch (tsumuNo)
             {
                 case 0:
-                    return Constants.SkillType.VerticalDestroy;
+                    return Constants.SkillType.HorizontalDestroy;
                 case 1:
-                    return Constants.SkillType.VerticalDestroy;
+                    return Constants.SkillType.PopBomb;
                 case 2:
-                    return Constants.SkillType.VerticalDestroy;
+                    return Constants.SkillType.CenterChange;
                 case 3:
-                    return Constants.SkillType.VerticalDestroy;
+                    return Constants.SkillType.HorizontalDestroy;
                 case 4:
                     return Constants.SkillType.VerticalDestroy;
                 case 5:
-                    return Constants.SkillType.VerticalDestroy;
+                    return Constants.SkillType.PopBomb;
                 case 6:
                     return Constants.SkillType.VerticalDestroy;
                 case 7:
-                    return Constants.SkillType.VerticalDestroy;
+                    return Constants.SkillType.CenterChange;
                 case 8:
-                    return Constants.SkillType.VerticalDestroy;
+                    return Constants.SkillType.RandomChange;
                 default:
                     return Constants.SkillType.VerticalDestroy;
             }
@@ -156,7 +157,19 @@ namespace UI
             switch (skillType)
             {
                 case Constants.SkillType.VerticalDestroy:
-                    skill.text = "縦方向にパズルを消すよ！";
+                    skill.text = "縦ライン状にパズルを消すよ！";
+                    break;
+                case Constants.SkillType.HorizontalDestroy:
+                    skill.text = "横ライン状にパズルを消すよ！";
+                    break;
+                case Constants.SkillType.CenterChange:
+                    skill.text = "中央のパズルを" + GetName(currentTsumu) + "に変えるよ！";
+                    break;
+                case Constants.SkillType.RandomChange:
+                    skill.text = "パズルを" + Constants.SKILL_CHANGE_AMOUNT + "個" + GetName(currentTsumu) + "に変えるよ！";
+                    break;
+                case Constants.SkillType.PopBomb:
+                    skill.text = "ボムを" + Constants.SKILL_BOMB_AMOUNT + "個発生させるよ！";
                     break;
                 default:
                     skill.text = "該当なし";
