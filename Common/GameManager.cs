@@ -26,6 +26,13 @@ public class GameManager : MonoBehaviour
         get { return mainCharacterSprite; }
     }
 
+    private bool isPause;
+    public bool IsPause
+    {
+        set { isPause = value; }
+        get { return isPause; }
+    }
+
     private GameObject skill;
     public GameObject Skill => skill;
 

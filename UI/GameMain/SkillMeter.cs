@@ -15,9 +15,6 @@ namespace UI
         private GameObject skillButton;
 
         [SerializeField]
-        private GameObject pause;
-
-        [SerializeField]
         private Skill skill;
 
         private GameManager gameManager;
@@ -67,7 +64,7 @@ namespace UI
                 skillReady.Play();
             }
 
-            if (pause.activeSelf)
+            if (gameManager.IsPause)
                 skillButton.SetActive(false);
         }
 

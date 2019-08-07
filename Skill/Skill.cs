@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Skill : MonoBehaviour
 {
@@ -25,6 +25,8 @@ public class Skill : MonoBehaviour
 
     private Sprite mainTsumu;
 
+    private Animation areaAnim;
+
     void Start()
     {
         gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
@@ -39,8 +41,6 @@ public class Skill : MonoBehaviour
     public void StartSkill()
     {
         SwitchSkill();
-
-        //Time.timeScale = 1.0f;
     }
 
     private void SwitchStart()
@@ -49,6 +49,7 @@ public class Skill : MonoBehaviour
         { 
             case "AreaDestroy":
                 skillCollision = skill.GetComponent<CollisionList>();
+                areaAnim = skill.GetComponentInChildren<Animation>();
                 break;
             case "AreaChange":
                 skillCollision = skill.GetComponent<CollisionList>();
@@ -67,7 +68,7 @@ public class Skill : MonoBehaviour
         switch (skillTag)
         {
             case "AreaDestroy":
-                AreaDestroy();
+                StartCoroutine("AreaDestroy");
                 break;
             case "AreaChange":
                 AreaChange();
@@ -81,29 +82,13 @@ public class Skill : MonoBehaviour
         }
     }
 
-    private void AreaDestroy()
-    {
-        skill.SetActive(false);
-
-        tsumuList = skillCollision.TsumuList;
-
-        if (tsumuList.Count >= Constants.CONNECT_BOMB_MIN)
-            bombPool.PopObj(skillCollision.transform.localPosition);
-
-        tsumuDrag.DestroyTsumu(tsumuList);
-
-        skill.SetActive(true);
-
-        Time.timeScale = 1.0f;
-    }
-
     private void AreaChange()
     {
         skill.SetActive(false);
 
         tsumuList = skillCollision.TsumuList;
 
-        foreach(GameObject tempObj in tsumuList)
+        foreach (GameObject tempObj in tsumuList)
         {
             if (tempObj.name == (mainTsumu.name + "(Clone)"))
                 continue;
@@ -146,5 +131,29 @@ public class Skill : MonoBehaviour
             amount--;
         }
         tsumuList = new List<GameObject>();
+    }
+
+    private IEnumerator AreaDestroy()
+    {
+        areaAnim.Play();
+        while (areaAnim.isPlaying)
+        {
+            if(!gameManager.IsPause)
+                areaAnim[skill.name.Replace("(Clone)", "")].time += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        skill.SetActive(false);
+
+        tsumuList = skillCollision.TsumuList;
+
+        if (tsumuList.Count >= Constants.CONNECT_BOMB_MIN)
+            bombPool.PopObj(skillCollision.transform.localPosition);
+
+        tsumuDrag.DestroyTsumu(tsumuList);
+
+        skill.SetActive(true);
+
+        Time.timeScale = 1.0f;
     }
 }

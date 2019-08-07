@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -11,12 +9,11 @@ namespace UI
         private Text comboValue;
 
         [SerializeField]
-        private Animation comboAnim;
-
-        [SerializeField]
         private Fever fever;
        
         private float duration;
+
+        private Animation comboAnim;
 
         private int comboCount;
         public int ComboCount
@@ -29,6 +26,11 @@ namespace UI
                 comboAnim.Play();
             }
             get { return comboCount; }
+        }
+
+        void Start()
+        {
+            comboAnim = gameObject.GetComponent<Animation>();
         }
 
         void Update()

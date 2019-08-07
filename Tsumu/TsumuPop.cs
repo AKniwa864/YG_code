@@ -1,16 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Tsumu
 {
     public class TsumuPop : MonoBehaviour
     {
-        [SerializeField]
-        private int tsumuMax;
-
         private GameManager gameManager;
 
         public int TsumuCount { set; get; }
@@ -22,10 +16,10 @@ namespace Tsumu
 
         void Update()
         {
-            if (tsumuMax > TsumuCount)
+            if (Constants.TSUMU_MAX > TsumuCount)
             {
-                StartCoroutine(Pop(tsumuMax - TsumuCount));
-                TsumuCount += tsumuMax - TsumuCount;
+                StartCoroutine(Pop(Constants.TSUMU_MAX - TsumuCount));
+                TsumuCount += Constants.TSUMU_MAX - TsumuCount;
             }
         }
 

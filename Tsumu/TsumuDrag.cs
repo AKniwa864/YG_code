@@ -8,12 +8,6 @@ namespace Tsumu
     public class TsumuDrag : MonoBehaviour
     {
         [SerializeField]
-        private GameObject pause;
-
-        [SerializeField]
-        private GameObject timeUp;
-
-        [SerializeField]
         private GameObject cutIn;
 
         [SerializeField]
@@ -57,7 +51,7 @@ namespace Tsumu
 
         void Update()
         {
-            if (pause.activeSelf || timeUp.activeSelf || cutIn.activeSelf)
+            if (gameManager.IsPause || cutIn.activeSelf)
                 return;
 
             if (Input.GetMouseButtonDown(0) && firstTsumu == null)

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
 
@@ -47,10 +45,7 @@ namespace UI
                 ChangeData();
                 SetMainData();
             }
-            get
-            {
-                return currentTsumu;
-            }
+            get { return currentTsumu; }
         }
 
         void Start()

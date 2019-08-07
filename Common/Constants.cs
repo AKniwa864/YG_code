@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Constants
+﻿public class Constants
 {
     public struct Data
     {
@@ -37,6 +33,8 @@ public class Constants
     }
 
     public static readonly float SELECT_FLICK_AMOUNT = 40.0f;
+
+    public static readonly int TSUMU_MAX = 30;
 
     public static readonly int CONNECT_MIN = 3;
     public static readonly int CONNECT_BOMB_MIN = 6;
