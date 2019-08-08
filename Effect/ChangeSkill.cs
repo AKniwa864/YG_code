@@ -29,7 +29,6 @@ namespace Effect
                 return;
 
             changeEffectPool.PushObj(gameObject);
-            gameObject.SetActive(false);
 
             if(Time.timeScale == 0.0f)
                 Time.timeScale = 1.0f;

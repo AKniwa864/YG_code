@@ -14,7 +14,6 @@ namespace Effect
         private void OnParticleSystemStopped()
         {
             objectPool.PushObj(gameObject);
-            gameObject.SetActive(false);
         }
     }
 }

@@ -21,7 +21,6 @@ namespace Tsumu
             destroyTsumuList = bombCollision.TsumuList;
 
             objectPool.PushObj(obj);
-            obj.SetActive(false);
 
             tsumuDrag.DestroyTsumu(destroyTsumuList);
         }

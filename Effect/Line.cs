@@ -40,7 +40,6 @@ namespace Effect
             if(elapsedTime >= 0.2f)
             {
                 objectPool.PushObj(gameObject);
-                gameObject.SetActive(false);
             }
         }
 

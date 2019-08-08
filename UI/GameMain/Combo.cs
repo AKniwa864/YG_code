@@ -28,7 +28,7 @@ namespace UI
             get { return comboCount; }
         }
 
-        void Start()
+        void Awake()
         {
             comboAnim = gameObject.GetComponent<Animation>();
         }

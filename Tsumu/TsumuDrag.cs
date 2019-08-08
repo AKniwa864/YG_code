@@ -32,6 +32,9 @@ namespace Tsumu
         private ObjectPool bombPool;
 
         [SerializeField]
+        private Effect.ConnectLine connectLine;
+
+        [SerializeField]
         private Bomb bomb;
 
         private GameManager gameManager;
@@ -133,12 +136,14 @@ namespace Tsumu
             lastTsumu.GetComponent<SpriteRenderer>().color = Color.white;
             firstTsumu = null;
             lastTsumu = null;
+            connectLine.Clear();
         }
 
         private void PushToList(GameObject obj)
         {
             dragTsumuList.Add(obj);
             obj.GetComponent<SpriteRenderer>().color = Color.gray;
+            connectLine.Add(obj);
         }
 
         public void DestroyTsumu(List<GameObject> list)
