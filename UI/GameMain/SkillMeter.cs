@@ -25,6 +25,8 @@ namespace UI
 
         private Slider skillMeter;
 
+        private Button button;
+
         private int skillTsumuCount;
         public int SkillTsumuCount
         {
@@ -40,8 +42,9 @@ namespace UI
         {
             gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
             cutInAnim = cutIn.GetComponent<Animator>();
-            skillReady = gameObject.GetComponent<Animation>();
+            skillReady = gameObject.GetComponentInParent<Animation>();
             skillMeter = gameObject.GetComponent<Slider>();
+            button = skillButton.GetComponent<Button>();
 
             mainTsumu.sprite = gameManager.MainTsumuSprite;
         }
@@ -65,7 +68,9 @@ namespace UI
             }
 
             if (gameManager.IsPause)
-                skillButton.SetActive(false);
+                button.enabled = false;
+            else if(!button.enabled)
+                button.enabled = true;
         }
 
         public void StartCutIn()

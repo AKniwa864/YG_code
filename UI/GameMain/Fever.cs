@@ -10,7 +10,12 @@ namespace UI
         private GameObject inFever;
 
         [SerializeField]
+        private SpriteRenderer[] inFeverFrame;
+
+        [SerializeField]
         private Timer timer;
+
+        private GameManager gameManager;
 
         private ObjectPool linePool;
 
@@ -20,9 +25,6 @@ namespace UI
         private Animation feverAnim;
         private Image fever;
 
-        private bool isFever = false;
-        public bool IsFever => isFever;
-
         private float feverWidth;
         private float singleWidth;
 
@@ -31,7 +33,7 @@ namespace UI
         {
             set
             {
-                if (isFever)
+                if (gameManager.IsFever)
                     return;
 
                 tsumuCount = value;
@@ -42,6 +44,7 @@ namespace UI
 
         void Start()
         {
+            gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
             linePool = inFever.GetComponent<ObjectPool>();
             backWidth = transform.parent.GetComponent<RectTransform>();
             feverTrans = GetComponent<RectTransform>();
@@ -58,15 +61,17 @@ namespace UI
         {
             if (Constants.FEVER_TSUMU_MIN <= tsumuCount)
             {
-                isFever = true;
+                gameManager.IsFever = true;
                 inFever.SetActive(true);
+
+                foreach (SpriteRenderer obj in inFeverFrame)
+                    obj.color = Color.gray;
 
                 feverAnim.Play();
 
                 for (int i = 0; i < Constants.EFFECT_LINE_AMOUNT; i++)
                     InvokeRepeating("PopLine", Random.Range(0.0f, 0.4f), Random.Range(0.2f, 0.6f));
 
-                timer.SwitchTimer(false);
                 StartCoroutine(FeverTime());
             }
         }
@@ -100,13 +105,15 @@ namespace UI
 
             feverWidth = -backWidth.rect.width;
             UpdateBar();
-            isFever = false;
+            gameManager.IsFever = false;
             inFever.SetActive(false);
+
+            foreach (SpriteRenderer obj in inFeverFrame)
+                obj.color = Color.white;
 
             feverAnim.Stop();
             fever.color = Color.white;
             
-            timer.SwitchTimer(true);
             CancelInvoke();
         }
 

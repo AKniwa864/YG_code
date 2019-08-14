@@ -8,43 +8,42 @@ namespace UI
     public class Timer : MonoBehaviour
     {
         [SerializeField]
-        private Text timerText;
-
-        [SerializeField]
         private GameObject timeUp;
 
-        private int timer = 60;
-        private float countTime;
+        private GameManager gameManager;
 
-        private Coroutine tempCoroutine;
+        private Text timerText;
+
+        private Image fill;
+
+        private float timer;
 
         void Start()
         {
-            timer = 60;
+            gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+
+            timerText = gameObject.GetComponentInChildren<Text>();
+            fill = gameObject.transform.Find("Fill").gameObject.GetComponent<Image>();
+
+            timer = Constants.TIME_MAX;
             timerText.text = timer.ToString();
-
-            tempCoroutine = StartCoroutine(limitTimer());
-
         }
 
-        private IEnumerator limitTimer()
+        void Update()
         {
-            while (timer > 0)
+            if (gameManager.IsFever)
+                return;
+
+            timer -= Time.deltaTime;
+            timerText.text = timer.ToString("#");
+
+            fill.fillAmount -= 1.0f / Constants.TIME_MAX * Time.deltaTime;
+
+            if (timer < 0)
             {
-                yield return new WaitForSeconds(1.0f);
-                timer--;
-                timerText.text = timer.ToString();
+                timerText.text = "0";
+                timeUp.SetActive(true);
             }
-
-            timeUp.SetActive(true);
-        }
-
-        public void SwitchTimer(bool isActive)
-        {
-            if(isActive)
-                tempCoroutine = StartCoroutine(limitTimer());
-            else
-                StopCoroutine(tempCoroutine);
         }
     }
 }

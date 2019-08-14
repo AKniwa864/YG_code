@@ -8,8 +8,7 @@ namespace UI
         [SerializeField]
         private Text comboValue;
 
-        [SerializeField]
-        private Fever fever;
+        private GameManager gameManager;
        
         private float duration;
 
@@ -30,12 +29,13 @@ namespace UI
 
         void Awake()
         {
+            gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
             comboAnim = gameObject.GetComponent<Animation>();
         }
 
         void Update()
         {
-            if(duration >= Constants.COMBO_LIMIT_TIME && !fever.IsFever)
+            if(duration >= Constants.COMBO_LIMIT_TIME && !gameManager.IsFever)
             {
                 duration = 0;
                 ComboCount = 0;
