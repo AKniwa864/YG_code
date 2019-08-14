@@ -1,4 +1,6 @@
-﻿public class Constants
+﻿using UnityEngine;
+
+public class Constants
 {
     public struct Data
     {
@@ -36,6 +38,8 @@
 
     public static readonly int TSUMU_MAX = 30;
 
+    public static readonly int TIME_MAX = 60;
+
     public static readonly int CONNECT_MIN = 3;
     public static readonly int CONNECT_BOMB_MIN = 6;
     public static readonly float CONNECT_DISTANCE = 1.5f;
@@ -49,6 +53,9 @@
     public static readonly float FEVER_TIME = 4.0f;
 
     public static readonly int EFFECT_LINE_AMOUNT = 6;
+
+    public static readonly Color32 LINE_COLOR_CYAN = new Color32(0, 255, 198, 80);
+    public static readonly Color32 LINE_COLOR_YELLOW = new Color32(255, 241, 0, 80);
 
     public enum Tsumu
     {

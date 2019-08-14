@@ -47,10 +47,10 @@ namespace Effect
         {
             switch(colorNo)
             {
-                case 0: return new Color32(0, 255, 198, 255);
-                case 1: return Color.yellow;
+                case 0: return Constants.LINE_COLOR_CYAN;
+                case 1: return Constants.LINE_COLOR_YELLOW;
 
-                default: return new Color32(0, 255, 198, 255);
+                default: return Constants.LINE_COLOR_CYAN;
             }
         }
     }

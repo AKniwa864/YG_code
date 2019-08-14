@@ -33,6 +33,13 @@ public class GameManager : MonoBehaviour
         get { return isPause; }
     }
 
+    private bool isFever;
+    public bool IsFever
+    {
+        set { isFever = value; }
+        get { return isFever; }
+    }
+
     private GameObject skill;
     public GameObject Skill => skill;
 
