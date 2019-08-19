@@ -8,6 +8,9 @@ namespace UI
         private GameObject[] page;
 
         [SerializeField]
+        private GameObject select;
+
+        [SerializeField]
         private GameObject curtain;
 
         private Animator curtainAnim;
@@ -21,6 +24,7 @@ namespace UI
         {
             curtainAnim = curtain.GetComponent<Animator>();
             PageChanger();
+            select.SetActive(false);
         }
 
         void Update()
@@ -45,6 +49,7 @@ namespace UI
                 tempHash = curtainAnim.GetCurrentAnimatorStateInfo(0).fullPathHash;
                 currentPage = Constants.TitlePageType.TsumuSelect;
                 PageChanger();
+                select.SetActive(true);
             }
         }
 
@@ -59,7 +64,6 @@ namespace UI
                 }
                 obj.SetActive(false);
             }
-
         } 
     }
 }

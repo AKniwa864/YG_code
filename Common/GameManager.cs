@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,11 +18,11 @@ public class GameManager : MonoBehaviour
         get { return mainTsumuSprite; }
     }
 
-    private Sprite mainCharacterSprite;
-    public Sprite MainCharacterSprite
+    private string mainCharacterName;
+    public string MainCharacterName
     {
-        set { mainCharacterSprite = value; }
-        get { return mainCharacterSprite; }
+        set { mainCharacterName = value; }
+        get { return mainCharacterName; }
     }
 
     private bool isPause;

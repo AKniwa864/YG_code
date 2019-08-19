@@ -34,7 +34,7 @@ public class Constants
         public static readonly string ISABELLA = "イザベラ";
     }
 
-    public static readonly float SELECT_FLICK_AMOUNT = 40.0f;
+    public static readonly float SELECT_FLICK_AMOUNT = 0.5f;
 
     public static readonly int TSUMU_MAX = 30;
 

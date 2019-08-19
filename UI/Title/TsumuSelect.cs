@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 using System;
 
 namespace UI
@@ -8,9 +10,6 @@ namespace UI
     {
         [SerializeField]
         private GameManager gameManager;
-
-        [SerializeField]
-        private Image[] characterSelect = new Image[3];
 
         [SerializeField]
         private Image tsumuSelect;
@@ -25,10 +24,37 @@ namespace UI
         private Text skill;
 
         [SerializeField]
-        private Sprite[] character = new Sprite[(int)Constants.Tsumu.Max];
+        private GameObject[] character = new GameObject[(int)Constants.Tsumu.Max];
+
+        [SerializeField]
+        private Vector2[] characterPos = new Vector2[(int)Constants.Tsumu.Max];
 
         [SerializeField]
         private Sprite[] tsumu = new Sprite[(int)Constants.Tsumu.Max];
+
+        private SceneChanger sceneChenger;
+
+        private Animator anim;
+
+        private bool flick;
+        public bool Flick
+        {
+            set
+            {
+                flick = value;
+
+                if (flick)
+                    StartCoroutine(Move());
+            }
+            get { return flick; }
+        }
+
+        private bool right;
+        public bool Right
+        {
+            set { right = value; }
+            private get { return right; }
+        }
 
         private int currentTsumu;
         public int CurrentTsumu
@@ -44,38 +70,75 @@ namespace UI
 
                 ChangeData();
                 SetMainData();
+                flick = false;
             }
             get { return currentTsumu; }
         }
 
         void Start()
         {
+            sceneChenger = gameObject.GetComponent<SceneChanger>();
+
             currentTsumu = (int)Constants.Tsumu.Isabella;
+
+            anim = character[currentTsumu].GetComponent<Animator>();
+
+            SavePos();
             ChangeData();
             SetMainData();
+        }
+
+        void Update()
+        {
+            if (anim == null)
+                return;
+
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Pose"))
+            {
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
+                    sceneChenger.ToGameMain();
+            }
         }
 
         private void ChangeData()
         {
             Constants.Tsumu tempCurrentTsumu;
 
-            if (currentTsumu == 0)
+            if (anim != character[currentTsumu].GetComponent<Animator>())
             {
-                characterSelect[0].sprite = character[(int)Constants.Tsumu.Max - 1];
-                characterSelect[1].sprite = character[currentTsumu];
-                characterSelect[2].sprite = character[currentTsumu + 1];
+                if (anim != null && anim.enabled)
+                    anim.enabled = false;
+
+                anim = character[currentTsumu].GetComponent<Animator>();
+
+                if (character[currentTsumu].GetComponent<Animator>() != null && anim.enabled == false)
+                    anim.enabled = true;
             }
-            else if (currentTsumu == (int)Constants.Tsumu.Max - 1)
+
+            if (flick)
             {
-                characterSelect[0].sprite = character[currentTsumu - 1];
-                characterSelect[1].sprite = character[currentTsumu];
-                characterSelect[2].sprite = character[0];
-            }
-            else
-            {
-                characterSelect[0].sprite = character[currentTsumu - 1];
-                characterSelect[1].sprite = character[currentTsumu];
-                characterSelect[2].sprite = character[currentTsumu + 1];
+                for (int i = 0; i < (int)Constants.Tsumu.Max; i ++)
+                {
+                    if (right)
+                    {
+                        if(i == (int)Constants.Tsumu.Max - 1)
+                            character[(int)Constants.Tsumu.Max - 1].transform.position = characterPos[0];
+                        else
+                            character[i].transform.position = characterPos[i + 1];
+                    }
+                    else
+                    {
+                        if (i == 0)
+                            character[i].transform.position = characterPos[(int)Constants.Tsumu.Max - 1];
+                        else
+                            character[i].transform.position = characterPos[i - 1];
+                    }
+
+                    if (i == currentTsumu)
+                        character[i].GetComponent<SortingGroup>().sortingOrder = 1;
+                    else
+                        character[i].GetComponent<SortingGroup>().sortingOrder = -1;
+                } 
             }
 
             tsumuSelect.sprite = tsumu[currentTsumu];
@@ -90,7 +153,48 @@ namespace UI
         {
             gameManager.MainTsumu = currentTsumu;
             gameManager.MainTsumuSprite = tsumu[currentTsumu];
-            gameManager.MainCharacterSprite = character[currentTsumu];
+            gameManager.MainCharacterName = character[currentTsumu].name;
+        }
+
+        private void SavePos()
+        {
+            for (int i = 0; i < (int)Constants.Tsumu.Max; i++)
+                characterPos[i] = character[i].transform.position;
+        }
+
+        private IEnumerator Move()
+        {
+            float tempAmount = 0;
+
+            SavePos();
+
+            while (tempAmount < 3.5)
+            {
+                foreach (GameObject obj in character)
+                {
+                    if (right)
+                        obj.transform.Translate(Constants.SELECT_FLICK_AMOUNT, 0, 0);
+                    else
+                        obj.transform.Translate(-Constants.SELECT_FLICK_AMOUNT, 0, 0);
+                }
+
+                tempAmount += Constants.SELECT_FLICK_AMOUNT;
+
+                yield return null;
+            }
+
+            if (right)
+                CurrentTsumu--;
+            else
+                CurrentTsumu++;
+        }
+
+        public void Pose()
+        {
+            if ((anim = character[currentTsumu].GetComponent<Animator>()) != null)
+                anim.SetBool("Pose", true);
+            else
+                sceneChenger.ToGameMain();
         }
 
         private string GetName(int tsumuNo)

@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Flick : MonoBehaviour
 {
     [SerializeField]
-    private RectTransform select;
+    private Transform select;
 
     [SerializeField]
     private UI.TitlePage titlePage;
@@ -19,8 +17,6 @@ public class Flick : MonoBehaviour
     private Vector2 initPos;
 
     private Vector3 posAmount = new Vector3(Constants.SELECT_FLICK_AMOUNT, 0.0f, 0.0f);
-
-    private bool move;
 
     void Start()
     {
@@ -66,36 +62,12 @@ public class Flick : MonoBehaviour
         }
     }
 
-    public void StartMove(bool right)
+    public void StartMove(bool isRight)
     {
-        if (move)
+        if (tsumuSelect.Flick)
             return;
 
-        StartCoroutine(Move(right));
-    }
-
-    private IEnumerator Move(bool right)
-    {
-        move = true;
-        while (Mathf.Abs(select.localPosition.x) < 360)
-        {
-            if (right)
-                select.localPosition += posAmount;
-            else
-                select.localPosition -= posAmount;
-
-            yield return null;
-        }
-
-        select.localPosition = initPos;
-        startPos = initPos;
-        endPos = initPos;
-
-        if (right)
-            tsumuSelect.CurrentTsumu--;
-        else
-            tsumuSelect.CurrentTsumu++;
-
-        move = false;
+        tsumuSelect.Right = isRight;
+        tsumuSelect.Flick = true;
     }
 }

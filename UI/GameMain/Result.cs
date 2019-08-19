@@ -57,7 +57,6 @@ namespace UI
 
         public void ToRanking()
         {
-            Time.timeScale = 1.0f;
             naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score.ScoreValue);
         }
     }

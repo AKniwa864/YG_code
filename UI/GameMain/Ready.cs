@@ -1,28 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class Ready : MonoBehaviour
     {
         [SerializeField]
-        private GameObject ready;
-
-        [SerializeField]
-        Tsumu.TsumuPop tsumuPop;
+        private Button pause;
 
         private Animator readyAnim;
 
         void Start()
         {
-            readyAnim = ready.GetComponent<Animator>();
+            readyAnim = gameObject.GetComponent<Animator>();
+            pause.interactable = false;
         }
 
         void Update()
         {
             if (readyAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-                ready.SetActive(false);
+            {
+                gameObject.SetActive(false);
+                pause.interactable = true;
+            }
         }
     }
 }
