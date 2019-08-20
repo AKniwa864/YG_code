@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,12 +15,26 @@ namespace UI
 
         public void ToTitle()
         {
-            Destroy(gameManager);
-            SceneManager.LoadScene("Title");
+            StartCoroutine(Title());
         }
 
         public void ToGameMain()
         {
+            StartCoroutine(GameMain());
+        }
+
+        private IEnumerator Title()
+        {
+            yield return new WaitForSecondsRealtime(Constants.BUTTON_ANIM_TIME);
+
+            Destroy(gameManager);
+            SceneManager.LoadScene("Title");
+        }
+
+        private IEnumerator GameMain()
+        {
+            yield return new WaitForSecondsRealtime(Constants.BUTTON_ANIM_TIME);
+
             SceneManager.LoadScene("GameMain");
         }
     }

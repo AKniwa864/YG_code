@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,32 +13,29 @@ namespace UI
         private Text lastScore;
 
         [SerializeField]
-        private Button Ranking;
+        private Button ranking;
 
         [SerializeField]
-        private Button Retry;
+        private Button retry;
 
         [SerializeField]
-        private Button Title;
-
-        [SerializeField]
-        private float scoreUpdateTime;
+        private Button title;
 
         void Start()
         {
             StartCoroutine(LastScore());
-            Title.interactable = false;
-            Retry.interactable = false;
-            Ranking.interactable = false;
+            title.interactable = false;
+            retry.interactable = false;
+            ranking.interactable = false;
         }
         
         private IEnumerator LastScore()
         {
             float elapsedTime = 0.0f;
 
-            while (elapsedTime < scoreUpdateTime)
+            while (elapsedTime < Constants.SCORE_UPDATE_TIME)
             {
-                float rate = elapsedTime / scoreUpdateTime;
+                float rate = elapsedTime / Constants.SCORE_UPDATE_TIME;
 
                 lastScore.text = (score.ScoreValue * rate).ToString("N0");
 
@@ -50,13 +46,20 @@ namespace UI
 
             lastScore.text = score.ScoreValue.ToString("N0");
 
-            Title.interactable = true;
-            Retry.interactable = true;
-            Ranking.interactable = true;
+            title.interactable = true;
+            retry.interactable = true;
+            ranking.interactable = true;
         }
 
         public void ToRanking()
         {
+            StartCoroutine(Ranking());
+        }
+
+        private IEnumerator Ranking()
+        {
+            yield return new WaitForSecondsRealtime(Constants.BUTTON_ANIM_TIME);
+
             naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score.ScoreValue);
         }
     }

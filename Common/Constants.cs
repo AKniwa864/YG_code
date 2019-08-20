@@ -36,6 +36,8 @@ public class Constants
 
     public static readonly float SELECT_FLICK_AMOUNT = 0.5f;
 
+    public static readonly float BUTTON_ANIM_TIME = 0.2f;
+
     public static readonly int TSUMU_MAX = 30;
 
     public static readonly int TIME_MAX = 60;
@@ -56,6 +58,8 @@ public class Constants
 
     public static readonly Color32 LINE_COLOR_CYAN = new Color32(0, 255, 198, 80);
     public static readonly Color32 LINE_COLOR_YELLOW = new Color32(255, 241, 0, 80);
+
+    public static readonly float SCORE_UPDATE_TIME = 1.0f;
 
     public enum Tsumu
     {
