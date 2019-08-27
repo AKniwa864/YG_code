@@ -112,7 +112,7 @@ namespace UI
                 obj.color = Color.white;
 
             feverAnim.Stop();
-            fever.color = Color.white;
+            fever.color = Constants.FEVER_COLOR_DEFAULT;
             
             CancelInvoke();
         }

@@ -33,7 +33,7 @@ namespace UI
                 return;
 
             timer -= Time.deltaTime;
-            timerText.text = timer.ToString("#");
+            timerText.text = timer.ToString("0");
 
             fill.fillAmount -= 1.0f / Constants.TIME_MAX * Time.deltaTime;
 

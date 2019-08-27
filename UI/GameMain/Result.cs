@@ -13,25 +13,24 @@ namespace UI
         private Text lastScore;
 
         [SerializeField]
-        private Button ranking;
+        private Button[] button = new Button[3];
 
         [SerializeField]
-        private Button retry;
+        private Button pause;
 
-        [SerializeField]
-        private Button title;
-
-        void Start()
+        void OnEnable()
         {
             StartCoroutine(LastScore());
-            title.interactable = false;
-            retry.interactable = false;
-            ranking.interactable = false;
+
+            foreach (Button btn in button)
+                btn.interactable = false;
         }
         
         private IEnumerator LastScore()
         {
             float elapsedTime = 0.0f;
+
+            pause.interactable = false;
 
             while (elapsedTime < Constants.SCORE_UPDATE_TIME)
             {
@@ -46,9 +45,8 @@ namespace UI
 
             lastScore.text = score.ScoreValue.ToString("N0");
 
-            title.interactable = true;
-            retry.interactable = true;
-            ranking.interactable = true;
+            foreach (Button btn in button)
+                btn.interactable = true;
         }
 
         public void ToRanking()

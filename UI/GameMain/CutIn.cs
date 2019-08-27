@@ -8,7 +8,7 @@ public class CutIn : MonoBehaviour
 
     private Animator cutInAnim;
 
-    private Animator poseAnim;
+    private Animator charaAnim;
 
     void Start()
     {
@@ -17,25 +17,28 @@ public class CutIn : MonoBehaviour
         cutIn = Instantiate((GameObject)Resources.Load("Prefabs/Character/" + gameManager.MainCharacterName), transform.position, Quaternion.identity);
         cutIn.transform.parent = transform;
 
-        if ((poseAnim = cutIn.GetComponent<Animator>()) != null)
-            poseAnim.SetBool("Pose", true);
+        if ((charaAnim = cutIn.GetComponent<Animator>()) != null)
+        {
+            charaAnim.enabled = true;
+            charaAnim.SetBool("Pose", true);
+        }
     }
 
     void OnEnable()
     {
-        if (poseAnim != null)
-            poseAnim.SetBool("Pose", true);
+        if (charaAnim != null)
+            charaAnim.SetBool("Pose", true);
     }
 
     void Update()
     {
         PauseAnim();
 
-        if ((poseAnim = cutIn.GetComponent<Animator>()) == null)
+        if ((charaAnim = cutIn.GetComponent<Animator>()) == null)
             return;
 
-        if (poseAnim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
-            poseAnim.SetBool("Pose", false);
+        if (charaAnim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
+            charaAnim.SetBool("Pose", false);
     }
 
     private void PauseAnim()
@@ -44,8 +47,8 @@ public class CutIn : MonoBehaviour
         {
             cutInAnim.enabled = false;
 
-            if (poseAnim != null)
-                poseAnim.enabled = false;
+            if (charaAnim != null)
+                charaAnim.enabled = false;
         }
         else
         {
@@ -53,8 +56,8 @@ public class CutIn : MonoBehaviour
             {
                 cutInAnim.enabled = true;
 
-                if (poseAnim != null)
-                    poseAnim.enabled = true;
+                if (charaAnim != null)
+                    charaAnim.enabled = true;
             }
         }
 

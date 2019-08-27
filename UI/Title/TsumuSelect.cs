@@ -27,10 +27,9 @@ namespace UI
         private GameObject[] character = new GameObject[(int)Constants.Tsumu.Max];
 
         [SerializeField]
-        private Vector2[] characterPos = new Vector2[(int)Constants.Tsumu.Max];
-
-        [SerializeField]
         private Sprite[] tsumu = new Sprite[(int)Constants.Tsumu.Max];
+
+        private Vector2[] characterPos = new Vector2[(int)Constants.Tsumu.Max];
 
         private SceneChanger sceneChenger;
 
@@ -93,7 +92,7 @@ namespace UI
             if (anim == null)
                 return;
 
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Pose"))
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Pose" ))
             {
                 if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
                     sceneChenger.ToGameMain();
@@ -135,12 +134,11 @@ namespace UI
                     }
 
                     if (i == currentTsumu)
-                        character[i].GetComponent<SortingGroup>().sortingOrder = 1;
+                        character[i].GetComponent<SortingGroup>().sortingOrder = 2;
                     else
-                        character[i].GetComponent<SortingGroup>().sortingOrder = -1;
+                        character[i].GetComponent<SortingGroup>().sortingOrder = 0;
                 } 
             }
-
             tsumuSelect.sprite = tsumu[currentTsumu];
 
             tempCurrentTsumu = (Constants.Tsumu)Enum.ToObject(typeof(Constants.Tsumu), currentTsumu);
