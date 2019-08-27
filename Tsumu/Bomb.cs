@@ -22,6 +22,9 @@ namespace Tsumu
 
             objectPool.PushObj(obj);
 
+            tsumuDrag.IsConnect = false;
+            tsumuDrag.ValueEffectPos = obj.transform.position;
+
             tsumuDrag.DestroyTsumu(destroyTsumuList);
         }
     }

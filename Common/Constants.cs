@@ -42,6 +42,8 @@ public class Constants
 
     public static readonly int TIME_MAX = 60;
 
+    public static readonly int CONNECT_DIGIT_MAX = 2;
+
     public static readonly int CONNECT_MIN = 3;
     public static readonly int CONNECT_BOMB_MIN = 6;
     public static readonly float CONNECT_DISTANCE = 1.5f;
@@ -53,6 +55,7 @@ public class Constants
 
     public static readonly int FEVER_TSUMU_MIN = 15;
     public static readonly float FEVER_TIME = 4.0f;
+    public static readonly Color32 FEVER_COLOR_DEFAULT = new Color32(229, 255, 88, 255);
 
     public static readonly int EFFECT_LINE_AMOUNT = 6;
 

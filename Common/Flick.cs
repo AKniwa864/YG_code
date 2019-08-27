@@ -2,13 +2,8 @@
 
 public class Flick : MonoBehaviour
 {
-    [SerializeField]
-    private Transform select;
-
-    [SerializeField]
     private UI.TitlePage titlePage;
 
-    [SerializeField]
     private UI.TsumuSelect tsumuSelect;
 
     private Vector2 startPos;
@@ -20,7 +15,8 @@ public class Flick : MonoBehaviour
 
     void Start()
     {
-        initPos = select.localPosition;
+        titlePage = gameObject.GetComponent<UI.TitlePage>();
+        tsumuSelect = gameObject.GetComponent<UI.TsumuSelect>();
     }
 
     void Update()

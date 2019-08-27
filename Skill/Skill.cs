@@ -150,6 +150,8 @@ public class Skill : MonoBehaviour
         if (tsumuList.Count >= Constants.CONNECT_BOMB_MIN)
             bombPool.PopObj(skillCollision.transform.localPosition);
 
+        tsumuDrag.IsConnect = false;
+        tsumuDrag.ValueEffectPos = skill.transform.position;
         tsumuDrag.DestroyTsumu(tsumuList);
 
         skill.SetActive(true);
