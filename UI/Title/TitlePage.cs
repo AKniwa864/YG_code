@@ -5,10 +5,13 @@ namespace UI
     public class TitlePage : MonoBehaviour
     {
         [SerializeField]
-        private GameObject[] page;
+        private GameObject[] page = new GameObject[(int)Constants.TitlePageType.Max];
 
         [SerializeField]
-        private GameObject select;
+        private GameObject[] pageObj = new GameObject[(int)Constants.TitlePageType.Max];
+
+        [SerializeField]
+        private GameObject[] bg = new GameObject[(int)Constants.TitlePageType.Max];
 
         [SerializeField]
         private GameObject curtain;
@@ -24,7 +27,6 @@ namespace UI
         {
             curtainAnim = curtain.GetComponent<Animator>();
             PageChanger();
-            select.SetActive(false);
         }
 
         void Update()
@@ -49,20 +51,23 @@ namespace UI
                 tempHash = curtainAnim.GetCurrentAnimatorStateInfo(0).fullPathHash;
                 currentPage = Constants.TitlePageType.TsumuSelect;
                 PageChanger();
-                select.SetActive(true);
             }
         }
 
         private void PageChanger()
         {
-            foreach (GameObject obj in page)
+            for(int i = 0; i < (int)Constants.TitlePageType.Max; i ++)
             {
-                if (page[(int)currentPage] == obj)
+                if ((int)currentPage == i)
                 {
-                    page[(int)currentPage].SetActive(true);
+                    page[i].SetActive(true);
+                    pageObj[i].SetActive(true);
+                    bg[i].SetActive(true);
                     continue;
                 }
-                obj.SetActive(false);
+                page[i].SetActive(false);
+                pageObj[i].SetActive(false);
+                bg[i].SetActive(false);
             }
         } 
     }

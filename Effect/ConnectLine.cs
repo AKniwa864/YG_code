@@ -24,7 +24,7 @@ namespace Effect
             // ツムが動いた時の位置更新
             for(int i = 0; i < tsumuList.Count; i ++)
             {
-                if ((positionList[i] - (Vector2)tsumuList[i].transform.position).magnitude < 0.3f)
+                if ((positionList[i] - (Vector2)tsumuList[i].transform.position).magnitude < Constants.CONNECT_GAP_MIN)
                     continue;
                 
                 if (i == 0)

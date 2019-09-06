@@ -12,6 +12,9 @@ namespace UI
         private GameManager gameManager;
 
         [SerializeField]
+        private GameObject birthDay;
+
+        [SerializeField]
         private Image tsumuSelect;
 
         [SerializeField]
@@ -102,6 +105,11 @@ namespace UI
         private void ChangeData()
         {
             Constants.Tsumu tempCurrentTsumu;
+
+            if (currentTsumu == (int)Constants.Tsumu.Isabella)
+                birthDay.SetActive(true);
+            else
+                birthDay.SetActive(false);
 
             if (anim != character[currentTsumu].GetComponent<Animator>())
             {

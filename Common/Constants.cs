@@ -46,6 +46,7 @@ public class Constants
 
     public static readonly int CONNECT_MIN = 3;
     public static readonly int CONNECT_BOMB_MIN = 6;
+    public static readonly float CONNECT_GAP_MIN = 0.2f;
     public static readonly float CONNECT_DISTANCE = 1.5f;
 
     public static readonly int SKILL_BOMB_AMOUNT = 2;
@@ -56,11 +57,9 @@ public class Constants
     public static readonly int FEVER_TSUMU_MIN = 15;
     public static readonly float FEVER_TIME = 4.0f;
     public static readonly Color32 FEVER_COLOR_DEFAULT = new Color32(229, 255, 88, 255);
+    public static readonly Color32 FEVER_FRAME_COLOR = new Color32(100, 100, 100, 255);
 
     public static readonly int EFFECT_LINE_AMOUNT = 6;
-
-    public static readonly Color32 LINE_COLOR_CYAN = new Color32(0, 255, 198, 80);
-    public static readonly Color32 LINE_COLOR_YELLOW = new Color32(255, 241, 0, 80);
 
     public static readonly float SCORE_UPDATE_TIME = 1.0f;
 
@@ -82,6 +81,7 @@ public class Constants
     {
         Title = 0,
         TsumuSelect,
+        Max
     }
 
     public enum SkillType

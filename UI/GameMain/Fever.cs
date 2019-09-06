@@ -17,8 +17,6 @@ namespace UI
 
         private GameManager gameManager;
 
-        private ObjectPool linePool;
-
         private RectTransform backWidth;
 
         private RectTransform feverTrans;
@@ -45,7 +43,6 @@ namespace UI
         void Start()
         {
             gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
-            linePool = inFever.GetComponent<ObjectPool>();
             backWidth = transform.parent.GetComponent<RectTransform>();
             feverTrans = GetComponent<RectTransform>();
             feverAnim = GetComponent<Animation>();
@@ -65,12 +62,9 @@ namespace UI
                 inFever.SetActive(true);
 
                 foreach (SpriteRenderer obj in inFeverFrame)
-                    obj.color = Color.gray;
+                    obj.color = Constants.FEVER_FRAME_COLOR;
 
                 feverAnim.Play();
-
-                for (int i = 0; i < Constants.EFFECT_LINE_AMOUNT; i++)
-                    InvokeRepeating("PopLine", Random.Range(0.0f, 0.4f), Random.Range(0.2f, 0.6f));
 
                 StartCoroutine(FeverTime());
             }
@@ -120,11 +114,6 @@ namespace UI
         private void UpdateBar()
         {
             feverTrans.offsetMax = new Vector2(feverWidth, feverTrans.offsetMax.y);
-        }
-
-        private void PopLine()
-        {
-            linePool.PopObj(Vector2.zero);
         }
     }
 }
